@@ -1,0 +1,1 @@
+/usr/bin/c++ -rdynamic CMakeFiles/paoo_tema1.dir/main.cpp.o -o paoo_tema1 
