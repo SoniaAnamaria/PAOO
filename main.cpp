@@ -48,17 +48,26 @@ class ComplexNumber{
         }
 };
 
-class UncopyableComplexNumber : public ComplexNumber{
-    UncopyableComplexNumber(const UncopyableComplexNumber&)=delete;
-    UncopyableComplexNumber& operator=(const UncopyableComplexNumber&)=delete;
+class Uncopyable {
+    protected: 
+        Uncopyable() {} 
+        ~Uncopyable() {} 
+        Uncopyable(const Uncopyable&)=delete; 
+        Uncopyable& operator=(const Uncopyable&)=delete;
+};
 
-    using ComplexNumber::ComplexNumber;
+class UncopyableComplexNumber : public ComplexNumber, public Uncopyable{
+    public:
+        UncopyableComplexNumber(const float a, const float b)
+            :ComplexNumber(a,b)
+            {}
+    //using ComplexNumber::ComplexNumber;
 };
 
 int main()
 {
-    int a;
-    float b;
+    int *a;
+    char b;
     cout<<"a = "<<a<<endl;
     cout<<"b = "<<b<<endl;
 
