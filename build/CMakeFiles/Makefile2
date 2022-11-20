@@ -63,7 +63,7 @@ CMAKE_BINARY_DIR = /home/sonia/PAOO_Tema1/build
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/paoo_tema1.dir/all
+all: CMakeFiles/paoo_tema2.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -71,34 +71,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/paoo_tema1.dir/clean
+clean: CMakeFiles/paoo_tema2.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/paoo_tema1.dir
+# Target rules for target CMakeFiles/paoo_tema2.dir
 
 # All Build rule for target.
-CMakeFiles/paoo_tema1.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/paoo_tema1.dir/build.make CMakeFiles/paoo_tema1.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/paoo_tema1.dir/build.make CMakeFiles/paoo_tema1.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sonia/PAOO_Tema1/build/CMakeFiles --progress-num=1,2 "Built target paoo_tema1"
-.PHONY : CMakeFiles/paoo_tema1.dir/all
+CMakeFiles/paoo_tema2.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/paoo_tema2.dir/build.make CMakeFiles/paoo_tema2.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/paoo_tema2.dir/build.make CMakeFiles/paoo_tema2.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sonia/PAOO_Tema1/build/CMakeFiles --progress-num=1,2 "Built target paoo_tema2"
+.PHONY : CMakeFiles/paoo_tema2.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/paoo_tema1.dir/rule: cmake_check_build_system
+CMakeFiles/paoo_tema2.dir/rule: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sonia/PAOO_Tema1/build/CMakeFiles 2
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/paoo_tema1.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/paoo_tema2.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sonia/PAOO_Tema1/build/CMakeFiles 0
-.PHONY : CMakeFiles/paoo_tema1.dir/rule
+.PHONY : CMakeFiles/paoo_tema2.dir/rule
 
 # Convenience name for target.
-paoo_tema1: CMakeFiles/paoo_tema1.dir/rule
-.PHONY : paoo_tema1
+paoo_tema2: CMakeFiles/paoo_tema2.dir/rule
+.PHONY : paoo_tema2
 
 # clean rule for target.
-CMakeFiles/paoo_tema1.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/paoo_tema1.dir/build.make CMakeFiles/paoo_tema1.dir/clean
-.PHONY : CMakeFiles/paoo_tema1.dir/clean
+CMakeFiles/paoo_tema2.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/paoo_tema2.dir/build.make CMakeFiles/paoo_tema2.dir/clean
+.PHONY : CMakeFiles/paoo_tema2.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
