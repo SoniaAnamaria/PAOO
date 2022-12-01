@@ -1,7 +1,11 @@
 #include <iostream>
 #include <string>
+#include <thread>         
+#include <mutex> 
 
 using namespace std;
+
+mutex mtx;
 
 class Design{
     private:
@@ -53,14 +57,12 @@ class ComplexNumber{
          {}
 
         ComplexNumber(const ComplexNumber& number){
-            cout<<"In copy constructor"<<endl;
             re=number.img;
             img=number.re;
             design=new Design(*number.design);
         }
 
         ComplexNumber& operator=(const ComplexNumber& number){
-            cout<<"In copy assignment operator"<<endl;
             re=number.re;
             img=-number.img;
             Design *dOrig=design;
@@ -70,7 +72,6 @@ class ComplexNumber{
         }
 
         ComplexNumber& operator+=(const ComplexNumber& number){
-            cout<<"In += operator"<<endl;
             re+=number.re;
             img+=number.img;
             return *this;
@@ -122,26 +123,80 @@ class StilishedComplexNumber : public ComplexNumber{
         }
 };
 
+ComplexNumber* createComplexNumber(int type){
+    if(type==0){
+        return new ComplexNumber();
+    }
+    return new StilishedComplexNumber();
+}
+
+void print(int type){
+    tr1::shared_ptr<ComplexNumber> c1(createComplexNumber(type));
+    tr1::shared_ptr<ComplexNumber> c2(c1);
+
+    c1=c2;
+
+    cout<<c1->getRe()<<" + "<<c1->getImg()<<"i"<<endl;
+    cout<<c2->getRe()<<" + "<<c2->getImg()<<"i"<<endl;
+}
+
+class Uncopyable {
+    protected: 
+        Uncopyable() {} 
+        ~Uncopyable() {} 
+        Uncopyable(const Uncopyable&)=delete; 
+        Uncopyable& operator=(const Uncopyable&)=delete;
+};
+
+class Lock : public Uncopyable{
+    private:
+        mutex *mutexPtr;
+    public:
+        explicit Lock(mutex *pm)
+        : mutexPtr(pm)
+        { 
+            mutexPtr->lock();
+        }
+        ~Lock() 
+        { 
+            mutexPtr->unlock(); 
+        } 
+};
+
+void printComplexNumber(ComplexNumber c){
+    Lock ml(&mtx);
+    //Lock ml2(ml);
+    for(int i=0;i<300;i++)
+        cout<<c.getRe()<<" + "<<c.getImg()<<"i"<<endl;
+}
+
 int main()
 {
     Design design(1.5,"red");
     ComplexNumber number1(2,3,design);
-    cout<<"number1 = "<<number1.getRe()<<" + "<<number1.getImg()<<"i"<<"; weight:"<<number1.getDesign().getWeight()<<" pt; color:"<<number1.getDesign().getColor()<<endl;
+    // cout<<"number1 = "<<number1.getRe()<<" + "<<number1.getImg()<<"i"<<"; weight:"<<number1.getDesign().getWeight()<<" pt; color:"<<number1.getDesign().getColor()<<endl;
     ComplexNumber number2(number1);
-    cout<<"number2 = "<<number2.getRe()<<" + "<<number2.getImg()<<"i"<<"; weight:"<<number2.getDesign().getWeight()<<" pt; color:"<<number2.getDesign().getColor()<<endl;
-    ComplexNumber number3, number4;
-    cout<<"number3 = "<<number3.getRe()<<" + "<<number3.getImg()<<"i"<<"; weight:"<<number3.getDesign().getWeight()<<" pt; color:"<<number3.getDesign().getColor()<<endl;
-    number4 = number3 = number1;
-    cout<<"number3 = "<<number3.getRe()<<" + "<<number3.getImg()<<"i"<<"; weight:"<<number3.getDesign().getWeight()<<" pt; color:"<<number3.getDesign().getColor()<<endl;
-    cout<<"number4 = "<<number4.getRe()<<" + "<<number4.getImg()<<"i"<<"; weight:"<<number4.getDesign().getWeight()<<" pt; color:"<<number4.getDesign().getColor()<<endl;
-    number4+=number3+=number2;
-    cout<<"number4 = "<<number4.getRe()<<" + "<<number4.getImg()<<"i"<<"; weight:"<<number4.getDesign().getWeight()<<" pt; color:"<<number4.getDesign().getColor()<<endl;
-    number2 = number2;
+    // cout<<"number2 = "<<number2.getRe()<<" + "<<number2.getImg()<<"i"<<"; weight:"<<number2.getDesign().getWeight()<<" pt; color:"<<number2.getDesign().getColor()<<endl;
+    // ComplexNumber number3, number4;
+    // cout<<"number3 = "<<number3.getRe()<<" + "<<number3.getImg()<<"i"<<"; weight:"<<number3.getDesign().getWeight()<<" pt; color:"<<number3.getDesign().getColor()<<endl;
+    // number4 = number3 = number1;
+    // cout<<"number3 = "<<number3.getRe()<<" + "<<number3.getImg()<<"i"<<"; weight:"<<number3.getDesign().getWeight()<<" pt; color:"<<number3.getDesign().getColor()<<endl;
+    // cout<<"number4 = "<<number4.getRe()<<" + "<<number4.getImg()<<"i"<<"; weight:"<<number4.getDesign().getWeight()<<" pt; color:"<<number4.getDesign().getColor()<<endl;
+    // number4+=number3+=number2;
+    // cout<<"number4 = "<<number4.getRe()<<" + "<<number4.getImg()<<"i"<<"; weight:"<<number4.getDesign().getWeight()<<" pt; color:"<<number4.getDesign().getColor()<<endl;
+    // number2 = number2;
 
-    StilishedComplexNumber stilishedNumber(5,7,design,"dotted");
-    cout<<"stilishedNumber = "<<stilishedNumber.getRe()<<" + "<<stilishedNumber.getImg()<<"i"<<"; weight:"<<stilishedNumber.getDesign().getWeight()
-        <<" pt; color:"<<stilishedNumber.getDesign().getColor()<<"; style:"<<stilishedNumber.getStyle()<<endl;
-    StilishedComplexNumber stilishedNumber2(stilishedNumber), stilishedNumber3;
-    stilishedNumber3 = stilishedNumber;
+    // StilishedComplexNumber stilishedNumber(5,7,design,"dotted");
+    // cout<<"stilishedNumber = "<<stilishedNumber.getRe()<<" + "<<stilishedNumber.getImg()<<"i"<<"; weight:"<<stilishedNumber.getDesign().getWeight()
+    //     <<" pt; color:"<<stilishedNumber.getDesign().getColor()<<"; style:"<<stilishedNumber.getStyle()<<endl;
+    // StilishedComplexNumber stilishedNumber2(stilishedNumber), stilishedNumber3;
+    // stilishedNumber3 = stilishedNumber;
+
+
+    print(0);
+    thread th1 (printComplexNumber,number1);
+    thread th2 (printComplexNumber,number2);
+    th1.join();
+    th2.join();
     return 0;
 }

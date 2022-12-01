@@ -1,1 +1,1 @@
-/usr/bin/c++ -rdynamic CMakeFiles/paoo_tema2.dir/main.cpp.o -o paoo_tema2 
+/usr/bin/c++ -stdlib=libstdc++ -rdynamic CMakeFiles/paoo_tema2.dir/main.cpp.o -o paoo_tema2 
