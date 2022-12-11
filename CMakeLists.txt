@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
-project(paoo_tema2)
-add_executable(paoo_tema2 main.cpp)
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_CXX_FLAGS "-stdlib=libstdc++")
+project(paoo_tema3)
+add_executable(paoo_tema3 main.cpp)
+set(CMAKE_CXX_FLAGS "-pthread")
+find_package(Threads)
+

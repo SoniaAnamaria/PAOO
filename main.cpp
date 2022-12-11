@@ -2,6 +2,7 @@
 #include <string>
 #include <thread>         
 #include <mutex> 
+#include <memory>
 
 using namespace std;
 
@@ -131,8 +132,8 @@ ComplexNumber* createComplexNumber(int type){
 }
 
 void print(int type){
-    tr1::shared_ptr<ComplexNumber> c1(createComplexNumber(type));
-    tr1::shared_ptr<ComplexNumber> c2(c1);
+    shared_ptr<ComplexNumber> c1(createComplexNumber(type));
+    shared_ptr<ComplexNumber> c2(c1);
 
     c1=c2;
 
@@ -166,7 +167,7 @@ class Lock : public Uncopyable{
 void printComplexNumber(ComplexNumber c){
     Lock ml(&mtx);
     //Lock ml2(ml);
-    for(int i=0;i<300;i++)
+    for(int i=0;i<500;i++)
         cout<<c.getRe()<<" + "<<c.getImg()<<"i"<<endl;
 }
 
