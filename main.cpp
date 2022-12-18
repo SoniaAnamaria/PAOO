@@ -124,6 +124,8 @@ class StilishedComplexNumber : public ComplexNumber{
         }
 };
 
+//am adaugat functia care creeaza un numar complex in functie de parametru: 0-numar complex de tipul ComplexNumber
+//                                                                          1-numar complex de tipul StilishedComplexNumber
 ComplexNumber* createComplexNumber(int type){
     if(type==0){
         return new ComplexNumber();
@@ -131,8 +133,12 @@ ComplexNumber* createComplexNumber(int type){
     return new StilishedComplexNumber();
 }
 
+//am folosit smart pointer-ul shared_ptr care numara cate referinte exista catre obiectul respectiv si 
+//elibereaza spatiul respectiv cand nu mai exista referinte catre acel obiect
 void print(int type){
+    //c1 pointeaza catre obiectul returnat de createComplexNumber
     shared_ptr<ComplexNumber> c1(createComplexNumber(type));
+    //si c1 si c2 pointeaza catre acelasi obiect
     shared_ptr<ComplexNumber> c2(c1);
 
     c1=c2;
@@ -149,6 +155,7 @@ class Uncopyable {
         Uncopyable& operator=(const Uncopyable&)=delete;
 };
 
+//clasa Lock din laborator, modificata astfel incat sa nu permita copierea unui obicet de tip Lock
 class Lock : public Uncopyable{
     private:
         mutex *mutexPtr;
@@ -166,6 +173,7 @@ class Lock : public Uncopyable{
 
 void printComplexNumber(ComplexNumber c){
     Lock ml(&mtx);
+    //eroare,ml e Uncopyable
     //Lock ml2(ml);
     for(int i=0;i<500;i++)
         cout<<c.getRe()<<" + "<<c.getImg()<<"i"<<endl;
@@ -195,6 +203,8 @@ int main()
 
 
     print(0);
+    //am creat 2 thread-uri, cate unul pentru fiecare numar complex
+    //datorita lui Lock, numerele nu vor fi afisate intercalat, se va afisa un numar de 500 de ori, apoi celalalt
     thread th1 (printComplexNumber,number1);
     thread th2 (printComplexNumber,number2);
     th1.join();
